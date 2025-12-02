@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import ProductCard from '../ProductCard';
 import { useSearch } from '../SearchContext';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function ProductsDisplay() {
     
@@ -19,8 +20,12 @@ export default function ProductsDisplay() {
 
     const query = searchQuery.toLowerCase().trim();
 
+    const [visibleCount, setVisibleCount] = useState(20);
+    
     const [loading, setLoading] = useState(true);
     
+    const visibleProducts = result.slice(0,visibleCount);
+
     useEffect(() => {
         const fetchProducts = async () => {
             try{
@@ -92,7 +97,9 @@ export default function ProductsDisplay() {
         }
     }
 
-    
+    function loadMore() {
+        setVisibleCount((prev) => prev + 20);
+    }
     
     return(
         <section className='sm:flex '>
@@ -151,13 +158,21 @@ export default function ProductsDisplay() {
             
             <div className='flex flex-col items-center p-2 sm:basis-[70%] '>
                 <h1 className='font-semibold text-2xl'>Products</h1>
-                <div className='grid grid-cols-2 sm:grid-cols-3 gap-2'>
-                    {result.length > 0 && (
-                        result.map(product => (
-                            <ProductCard key={product.id} id={product.id} img={product.thumbnail} name={product.title} brand={product.brand} price={product.price} rating={product.rating} />
-                        ))
-                    )}
-                </div>               
+                <InfiniteScroll
+                    dataLength={visibleProducts.length}
+                    next={loadMore}
+                    hasMore={visibleCount < result.length}
+                    loading={<p className='text-center font-semibold'>Loading ...</p>}
+                    endMessage={<p className='text-center font-semibold '>End of products...</p>}
+                >
+                    <div className='grid grid-cols-2 sm:grid-cols-3 gap-2'>
+                        {visibleProducts.length > 0 && (
+                            visibleProducts.map(product => (
+                                <ProductCard key={product.id} id={product.id} img={product.thumbnail} name={product.title} brand={product.brand} price={product.price} rating={product.rating} />
+                            ))
+                        )}
+                    </div>
+                </InfiniteScroll>                              
             </div>
         </section>
     );
