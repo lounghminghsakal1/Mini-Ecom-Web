@@ -6,29 +6,29 @@ import ProductCard from "./ProductCard";
 
 export default function TrendingProducts() {
 
-    // const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
 
-    // let tProducts = [];
+    let tProducts = [];
 
-    // useEffect(() => {
-    //     try {
-    //         fetch(`https://dummyjson.com/products`)
-    //         .then((res) => res.json())
-    //         .then(data => setProducts(data.products));
-    //     } catch (err) {
-    //         console.log("Something Wrong ", err);
-    //     }
-    // },[]);
+    useEffect(() => {
+        try {
+            fetch(`https://dummyjson.com/products?limit=1000`)
+            .then((res) => res.json())
+            .then(data => setProducts(data.products));
+        } catch (err) {
+            console.log("Something Wrong ", err);
+        }
+    },[]);
 
-    // let tProductsId = [5,12]
+    let tProductsId = [81,136,11,123,133,101];
 
-    // tProducts = products.filter(p => tProductsId.includes(p.id));
+    tProducts = products.filter(p => tProductsId.includes(p.id));
 
 
     const trendingProducts = [
         {id:81, name:"Lenovo Laptop", brand:"Lenovo", rating:"4.7", price:3999.99 , img:"/images/hero4.png"},
         {id:136, name:"Vivo Mobile Phone", brand:"Vivo", rating:"4", price:499.99 , img:"/images/hero4.png"},
-        {id:11, name:"Cart", brand:"Annibale", rating:"4.7", price:1899.99, img:"/images/hero4.png"},
+        {id:11, name:"Bed", brand:"Annibale", rating:"4.7", price:1899.99, img:"/images/hero4.png"},
         {id:123, name:"IPhone", brand:"Apple", rating:"3.5", price:2099.99 , img:"/images/hero4.png"},
         {id:133, name:"Samsung Galaxy S24 Ultra", brand:"Samsung", rating:"4.9", price:3199.99 , img:"/images/hero4.png"},
         {id:101, name:"Boat AirPods", brand:"Boat", rating:"4.6", price:799.99 , img:"/images/hero4.png"},
@@ -39,9 +39,9 @@ export default function TrendingProducts() {
             <h1 className="text-2xl font-semibold text-center">Trending Products</h1>
             <p className="text-md text-gray-500 text-center mb-3">Know the trend to purchase</p>
             <div className="flex justify-center">
-                <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-                    {trendingProducts.map(product => (
-                        <ProductCard key={product.id} id={product.id} img={product.img} name={product.name} brand={product.brand} price={product.price} rating={product.rating} />
+                <section className="grid grid-cols-1 gap-2 sm:grid-cols-2 gap-4 md:grid-cols-3 gap-6">
+                    {tProducts.map(product => (
+                        <ProductCard key={product.id} id={product.id} img={product.thumbnail} name={product.name} brand={product.brand} price={product.price} rating={product.rating} />
                     ))}
                 </section>
             </div>
