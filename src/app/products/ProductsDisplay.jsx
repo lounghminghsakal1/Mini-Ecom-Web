@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import ProductCard from '../ProductCard';
+
 import { useSearch } from '../SearchContext';
-import InfiniteScroll from 'react-infinite-scroll-component';
+
 import { useSearchParams } from 'next/navigation';
+
+import ProductCard from '../ProductCard';
+
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function ProductsDisplay() {
     
@@ -33,6 +37,7 @@ export default function ProductsDisplay() {
 
     const category = searchParams.get("category");
 
+    
     useEffect(() => {
         const fetchProducts = async () => {
             try{
@@ -112,9 +117,11 @@ export default function ProductsDisplay() {
         }
     }
 
+    
     function loadMore() {
         setVisibleCount((prev) => prev + 20);
     }
+ 
     
     return(
         <section className='sm:flex '>

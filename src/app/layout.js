@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import CartProvider from "./CartContext";
 import SearchProvider from "./SearchContext";
 
+
 // import { NextUIProvider } from "@nextui-org/react";
 
 const geistSans = Geist({

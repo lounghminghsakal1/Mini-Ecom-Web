@@ -15,7 +15,7 @@ export default function ProductCard(props) {
                         <p className="text-sm text-gray-500 truncate">{props.brand}</p>
                         <p className="text-yellow-500 font-semibold">⭐{props.rating}</p>
                         <div className="flex flex-col ">
-                            <p className="text-md font-bold text-green-600">${Math.floor(props.price)}</p>
+                            <p className="text-md font-bold text-green-600">${(props.price).toFixed(2)}</p>
                             <button className="rounded-full text-white text-sm bg-blue-600 hover:bg-blue-400 hover:cursor-pointer px-2 py-1">View Details</button>    
                         </div>
                     </div>

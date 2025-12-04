@@ -71,7 +71,7 @@ export default function ProductDetailsDisplay() {
     return(
         <section>
                 <div className="p-1 sm:flex">
-                <Image src={product.thumbnail || null} alt="product image" width={500} height={500} className="bg-gray-300 p-2 rounded-md" />
+                <Image src={product.thumbnail || null} alt="product image" width={500} height={500} className="bg-gray-300 p-2 rounded-md sm:w-100 h-100" />
                 <div>
                     <div>
                     <h1 className="text-center text-xl font-bold m-2 ">Products Details</h1>
