@@ -7,7 +7,7 @@ import CartProductsCard from "./CartProductsCard";
 
 export default function CartItemsDisplay() {
 
-    const {cartItems} = useCart();
+    const {cartItems, setCartItems } = useCart();
     const [totalPrice, setTotalPrice] = useState(0);
 
     const total = useMemo(
@@ -23,9 +23,11 @@ export default function CartItemsDisplay() {
         const answer = confirm("Are you sure you want to buy all the cart items ?? ");
         if (answer) {
             alert('All cart items purchase has been processed');
+            setCartItems([]);
         } else {
             alert('Purchase has been cancelled');
         }
+
     }
 
     return(

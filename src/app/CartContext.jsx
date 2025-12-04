@@ -5,21 +5,22 @@ import { useState,createContext, useContext } from "react";
 const CartContext = createContext();
 
 export default function CartProvider({children }) {
+    
     const [cartItems, setCartItems] = useState([]);
     const [wishlistItems, setWishListItems] = useState([]);
 
-    const addToCart = (product) => {
+    const addToCart = (product, quantity = 1) => {
         
         setCartItems((prev) => {
 
             const exists = prev.find((p) => p.id === product.id);
             if (exists) {
                 return prev.map((item) => 
-                    item.id === product.id ? {...item, quantity: (item.quantity || 1) + 1} : item
+                    item.id === product.id ? {...item, quantity: item.quantity + quantity} : item
                 )
             }
 
-            return [...prev, {...product, quantity:1}]
+            return [...prev, {...product, quantity}]
         })
 
     };
@@ -59,6 +60,7 @@ export default function CartProvider({children }) {
         reduceQuantity,
         removeItemFromCart,
         cartItems,
+        setCartItems,
         wishlistItems
     };
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ProductCard from '../ProductCard';
 import { useSearch } from '../SearchContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSearchParams } from 'next/navigation';
 
 export default function ProductsDisplay() {
     
@@ -22,14 +23,28 @@ export default function ProductsDisplay() {
 
     const [visibleCount, setVisibleCount] = useState(20);
     
+
     const [loading, setLoading] = useState(true);
     
     const visibleProducts = result.slice(0,visibleCount);
 
+    
+    const searchParams = useSearchParams();
+
+    const category = searchParams.get("category");
+
     useEffect(() => {
         const fetchProducts = async () => {
             try{
-                const res = await fetch('https://dummyjson.com/products?limit=1000');
+                let url;
+                if (category) {
+                    url=`https://dummyjson.com/products/category/${category}`
+
+                } else{
+                    url = 'https://dummyjson.com/products?limit=1000';
+                }
+
+                const res = await fetch(url);
                 const data = await res.json();
                 setProducts(data.products);
                 setResult(data.products);
@@ -156,7 +171,7 @@ export default function ProductsDisplay() {
                 </div>
             </div>
             
-            <div className='flex flex-col items-center p-2 sm:basis-[70%] '>
+            <div className=' flex flex-col items-center p-2 sm:basis-[70%] '>
                 <h1 className='font-semibold text-2xl'>Products</h1>
                 <InfiniteScroll
                     dataLength={visibleProducts.length}
@@ -164,6 +179,7 @@ export default function ProductsDisplay() {
                     hasMore={visibleCount < result.length}
                     loading={<p className='text-center font-semibold'>Loading ...</p>}
                     endMessage={<p className='text-center font-semibold '>End of products...</p>}
+                    className='sm:w-2xl'
                 >
                     <div className='grid grid-cols-2 sm:grid-cols-3 gap-2'>
                         {visibleProducts.length > 0 && (

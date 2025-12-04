@@ -14,7 +14,7 @@ export default function WishListItemsCard({product}) {
             <div className="basis-2/3 ">
                 <h2 className="font-bold text-md w-36 truncate">{product.title}</h2>
                 <span className="text-green-600 font-semibold block">${product.price}</span>
-                <button onClick={() => addToCart(product)} className="bg-green-500 text-white rounded-md px-2 text-sm py-1 hover:bg-green-400 hover:cursor-pointer">Add To Cart</button>
+                <button onClick={() => addToCart(product, product.quantity)} className="bg-green-500 text-white rounded-md px-2 text-sm py-1 hover:bg-green-400 hover:cursor-pointer">Add To Cart</button>
                 
             </div>
         </div>

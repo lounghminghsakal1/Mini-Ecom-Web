@@ -9,7 +9,7 @@ export default function Header() {
 
     return(
         <header className="flex justify-between items-center p-1 sm:p-2 bg-gray-700 text-white">
-            <h2 className="text-xl font-bold px-1 sm:px-2">Sakal Shop</h2>
+            <h2 className="text-lg font-bold px-1  sm:px-2">Sakal Shop</h2>
             <div className="hidden sm:flex flex-1 mx-6 justify-center">
                 <div className="relative w-full max-w-md">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -36,10 +36,11 @@ export default function Header() {
                 />
                 </div>
             </div>
-            <ul className="flex gap-4 text-sm font-semibold px-4">
+            <ul className="flex gap-2 text-sm px-1">
                 <li><Link href="/" >Home</Link></li>
                 <li><Link href="/products">Products</Link></li>
                 <li><Link href="/cart">Cart</Link></li>
+                <li><Link href="/wishlist">Wishlist</Link></li>
             </ul>
         </header>
     );
