@@ -5,6 +5,8 @@ import Footer from "./Footer";
 import CartProvider from "./CartContext";
 import SearchProvider from "./SearchContext";
 
+// import { NextUIProvider } from "@nextui-org/react";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,11 +30,11 @@ export default function RootLayout({ children }) {
       >
         <CartProvider>
           <SearchProvider>
-            <Header />
-            <main className="flex-1 layout">
-              {children}
-            </main>
-            <Footer />
+              <Header />
+              <main className="flex-1 layout">
+                {children}
+              </main>
+              <Footer />
           </SearchProvider>
         </CartProvider>
       </body>

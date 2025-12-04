@@ -3,12 +3,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { useCart } from "../CartContext";
 import CartProductsCard from "./CartProductsCard";
+import ConfirmPopup from "../ConfirmPopup";
 
 
 export default function CartItemsDisplay() {
 
     const {cartItems, setCartItems } = useCart();
     const [totalPrice, setTotalPrice] = useState(0);
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const total = useMemo(
         () => 
@@ -20,14 +23,19 @@ export default function CartItemsDisplay() {
     //setTotalPrice(total)
 
     function handleBuyAll() {
-        const answer = confirm("Are you sure you want to buy all the cart items ?? ");
-        if (answer) {
-            alert('All cart items purchase has been processed');
-            setCartItems([]);
-        } else {
-            alert('Purchase has been cancelled');
-        }
+        // const answer = confirm("Are you sure you want to buy all the cart items ?? ");
+        // if (answer) {
+        //     alert('All cart items purchase has been processed');
+        //     setCartItems([]);
+        // } else {
+        //     alert('Purchase has been cancelled');
+        // }
+        setIsOpen(true);
+    }
 
+    function confirmBuyAll() {
+        setIsOpen(false);
+        setCartItems([]);
     }
 
     return(
@@ -46,9 +54,16 @@ export default function CartItemsDisplay() {
                 ) : (
                 <div className="p-2 flex justify-end">
                     <h2 className="text-center block text-[16px] w-44 px-2 rounded-md text-white bg-gray-500 text-lg flex-end">Grand Total: ${(total).toFixed(2)} </h2>
-                    <button className="w-16 bg-sky-800 text-white text-md mx-2 rounded" onClick={handleBuyAll} >Buy All</button>
+                    <button className="w-16 bg-sky-800 text-white text-md mx-2 rounded hover:bg-sky-700 cursor-pointer " onClick={handleBuyAll} >Buy All</button>
                 </div>
             )}
+
+            <ConfirmPopup
+                isOpen={isOpen}
+                message={`Are you sure you want to buy all the cart items ??`}
+                onConfirm={confirmBuyAll}
+                onCancel={() => setIsOpen(false)}
+            />
             
             <hr />           
         </div>

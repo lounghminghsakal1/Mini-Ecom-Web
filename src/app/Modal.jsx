@@ -1,7 +1,7 @@
 "use client";
 
 export default function Modal({ isOpen, onClose, title, children }) {
-  if (!isOpen) return null; // 🔥 nothing rendered when closed
+  if (!isOpen) return null; // nothing rendered when closed
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -12,7 +12,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
       />
 
       {/* Modal content */}
-      <div className="relative z-10 w-11/12 max-w-md rounded-2xl bg-white p-6 shadow-lg">
+      <div className="relative z-10 w-11/12 max-w-sm rounded-2xl bg-white p-6 shadow-lg">
         {/* Header */}
         <div className="mb-4 flex items-center justify-between gap-4">
           {title && <h2 className="text-xl font-semibold">{title}</h2>}

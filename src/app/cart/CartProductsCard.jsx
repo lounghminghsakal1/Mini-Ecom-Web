@@ -1,7 +1,12 @@
+"use client";
 
 import Image from "next/image";
 import { useCart } from "../CartContext";
 import Link from "next/link";
+import { useState } from "react";
+
+import ConfirmPopup from "../ConfirmPopup";
+
 
 export default function CartProductsCard(props) {
     
@@ -9,16 +14,42 @@ export default function CartProductsCard(props) {
     //     {img: "/images/hero4.png", title:"Example Product", price:19, quantity:1},
     // ];
     
-    const { increaseQuantity, reduceQuantity,removeItemFromCart } = useCart();
+    const { increaseQuantity, reduceQuantity,removeItemFromCart,cartItems,setCartItems } = useCart();
+
+    const [isOpen, setIsOpen] = useState(false);//for buy now button
+
+    const [isRemoveOpen, setIsRemoveOpen] = useState(false);
+
 
     function handleBuyNow() {
-        const answer = confirm(`Are you sure you want to buy ${props.product.quantity} quantity/quantities of ${props.product.title} ?`);
-        if (answer) {
-            alert(`${props.product.title} purchase is processed`);
-        } else {
-            alert('purchase is cancelled');
-        }
+        setIsOpen(true);
+        // const answer = confirm(`Are you sure you want to buy ${props.product.quantity} quantity/quantities of ${props.product.title} ?`);
+        
+        // if (answer) {
+        //     alert(`${props.product.title} purchase is processed`);
+        //     setCartItems(cartItems.filter(p => p.id !== id))
+        // } else {
+        //     alert('purchase is cancelled');
+        // }
     }
+
+    function confirmPurchase(id) {
+        setCartItems(cartItems.filter(p => p.id !== id));
+        setIsOpen(false);
+    }
+
+    function handleRemove() {
+        setIsRemoveOpen(true);
+    }
+
+    function confirmRemove() {
+        setIsRemoveOpen(false);
+        removeItemFromCart(props.product.id);
+    }
+
+    
+
+
 
     return(
         <div className="w-72 border-2 border-gray-500 rounded-md p-1 m-4">
@@ -39,10 +70,26 @@ export default function CartProductsCard(props) {
             </div>
             
             <div className="flex justify-between m-1 text-[14px]">
-                <button className="bg-red-500 text-white rounded-md px-2 hover:cursor-pointer hover:bg-red-400 " onClick={() => removeItemFromCart(props.product.id)} >Remove item</button>
+                <button className="bg-red-500 text-white rounded-md px-2 hover:cursor-pointer hover:bg-red-400 " onClick={handleRemove} >Remove item</button>
                 <Link href={`/products/${props.product.id}`}><button className="bg-blue-500 text-white rounded-md px-2 hover:cursor-pointer hover:bg-blue-400">View Details</button></Link>
-                <button className="bg-green-500 text-white rounded-md px-2 hover:cursor-pointer hover:bg-green-400" onClick={() => handleBuyNow()}>Buy Now</button>
+                <button className="bg-green-500 text-white rounded-md px-2 hover:cursor-pointer hover:bg-green-400" onClick={() => handleBuyNow(props.product.id)}>Buy Now</button>
             </div>
+            <ConfirmPopup
+                isOpen={isOpen}
+                message={`Are you sure you want to buy ${props.product.quantity} quantity/quantities of ${props.product.title} ?`}
+                onConfirm={() => confirmPurchase(props.product.id)}
+                onCancel={() => setIsOpen(false)}
+            />
+
+
+            <ConfirmPopup 
+                isOpen={isRemoveOpen}
+                message={`Are you sure you want to remove the item ${props.product.title} from cart ??`}
+                onConfirm={confirmRemove}
+                onCancel={() => setIsRemoveOpen(false)}
+            />
+                
+            
         </div>       
     );
 }

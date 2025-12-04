@@ -1,7 +1,30 @@
+"use client";
+
+import { useEffect,useState } from "react";
+
 import ProductCard from "./ProductCard";
 
 export default function TrendingProducts() {
-    
+
+    // const [products, setProducts] = useState([]);
+
+    // let tProducts = [];
+
+    // useEffect(() => {
+    //     try {
+    //         fetch(`https://dummyjson.com/products`)
+    //         .then((res) => res.json())
+    //         .then(data => setProducts(data.products));
+    //     } catch (err) {
+    //         console.log("Something Wrong ", err);
+    //     }
+    // },[]);
+
+    // let tProductsId = [5,12]
+
+    // tProducts = products.filter(p => tProductsId.includes(p.id));
+
+
     const trendingProducts = [
         {id:81, name:"Lenovo Laptop", brand:"Lenovo", rating:"4.7", price:3999.99 , img:"/images/hero4.png"},
         {id:136, name:"Vivo Mobile Phone", brand:"Vivo", rating:"4", price:499.99 , img:"/images/hero4.png"},

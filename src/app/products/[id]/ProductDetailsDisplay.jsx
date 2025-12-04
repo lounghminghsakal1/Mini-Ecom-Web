@@ -15,7 +15,7 @@ export default function ProductDetailsDisplay() {
     const [product, setProduct] = useState({});
     const [quantity, setQuantity] = useState(1);
 
-    const { cartItems,addToCart, addToWishList} = useCart();
+    const { cartItems,addToCart, addToWishList,setCartQuantity } = useCart();
 
     const [isOpen, setIsOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
@@ -40,17 +40,17 @@ export default function ProductDetailsDisplay() {
     }, [cartItems,product.id]);
 
     function handleAddToCart(product) {
+        setIsOpen(true);
         setModalMessage(`${product.title} is added to the cart`);
         console.log(product.title + "is added to the cart");
-        addToCart(product, quantity);
-        setIsOpen(true);
+        setCartQuantity(product, quantity);
     }
 
     function handleAddtoWishlist(product) {
+        setIsOpen(true);
         setModalMessage(`${product.title} is added to the wishlist`);
         console.log(product.title + "is added to the wishlist");    
         addToWishList(product);
-        setIsOpen(true);
     }
 
     function reduceQuantity() {
@@ -65,9 +65,6 @@ export default function ProductDetailsDisplay() {
     function increaseQuantity() {
         setQuantity(prev => prev + 1);
     }
-
-
-
 
     if (!product.thumbnail) return null;
     
@@ -97,24 +94,21 @@ export default function ProductDetailsDisplay() {
                     <button onClick={() => handleAddtoWishlist(product)} className="bg-gray-500 text-white rounded-md px-4 py-2 hover:bg-gray-400 hover:cursor-pointer">Add to Wishlist</button>
                 </div> 
                 {/* popup */}
-      <Modal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        title="Success"
-      >
-        <p className="mb-4 text-sm text-gray-700">{modalMessage}</p>
-        <button
-          onClick={() => setIsOpen(false)}
-          className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-500"
-        >
-          Close
-        </button>
-      </Modal>
-                 
+                <Modal
+                    isOpen={isOpen}
+                    onClose={() => setIsOpen(false)}
+                    title="Success"
+                >
+                    <p className="mb-4 text-sm text-gray-700">{modalMessage}</p>
+                    <button
+                    onClick={() => setIsOpen(false)}
+                    className="w-full rounded bg-gray-600 px-4 py-2 text-white hover:bg-gray-500 cursor-pointer"
+                    >
+                    Close
+                    </button>
+                </Modal>                      
                 </div>                
                 </div>
-    
-              
             <hr  />
             <SimilarProducts product={product} />
         </section>

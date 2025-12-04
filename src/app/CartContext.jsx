@@ -53,6 +53,17 @@ export default function CartProvider({children }) {
         );
     };
 
+
+    const setCartQuantity = (product, quantity = 1) => {
+        setCartItems((prev) => {
+            const exists = prev.find(p => p.id === product.id);
+            if (exists) {
+                return prev.map(p => p.id === product.id ? {...p, quantity} : p);
+            }
+            return [...prev, {...product, quantity}]
+        })
+    }
+
     const value = {
         addToCart,
         addToWishList,
@@ -61,6 +72,7 @@ export default function CartProvider({children }) {
         removeItemFromCart,
         cartItems,
         setCartItems,
+        setCartQuantity,
         wishlistItems
     };
 
