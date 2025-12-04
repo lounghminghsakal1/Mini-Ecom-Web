@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import SimilarProducts from "./SimilarProducts";
 import { useCart } from "@/app/CartContext";
-import Modal from "@/Modal";
+import Modal from "@/app/Modal";
 
 
 export default function ProductDetailsDisplay() {
