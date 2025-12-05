@@ -27,7 +27,11 @@ export default function SearchBar() {
     };
 
     useEffect(() => {
-        fetchData();
+        const timer = setTimeout(fetchData,300);
+
+        return () => {
+            clearTimeout(timer);
+        }
     },[input]);
 
     useEffect(() => {

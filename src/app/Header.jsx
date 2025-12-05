@@ -18,7 +18,7 @@ export default function Header() {
 
     return(
         <header className="relative flex justify-between items-center p-1 sm:p-2 bg-gray-700 text-white">
-            <h2 className=" text-sm w-20 mr-0 font-bold sm:px-2 sm:text-md">Sakal Shop</h2>
+            <h2 className=" text-sm w-20 mr-0 font-bold sm:px-2 sm:text-md sm:w-28">Sakal Shop</h2>
             <div className="flex-1 max-w-md mx-2">
                 <SearchBar className=""/>
             </div>

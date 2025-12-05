@@ -13,7 +13,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 export default function ProductsDisplay() {
     
     const [products, setProducts] = useState([]);
-    const [sortBy, setSortBy] = useState('Newest');    
+    const [sortBy, setSortBy] = useState('newest');    
     const [result, setResult] = useState([]);
     const [brands, setBrands] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
@@ -29,7 +29,8 @@ export default function ProductsDisplay() {
     
 
     const [loading, setLoading] = useState(true);
-    
+    const [isAnyFilter, setIsAnyFilter] = useState(false);
+
     const visibleProducts = result.slice(0,visibleCount);
 
     
@@ -104,6 +105,7 @@ export default function ProductsDisplay() {
 
     },[sortBy, selectedBrands, priceRange, minRating,query]);
     
+    
 
     function handleBrandChange(e) {
         
@@ -121,12 +123,39 @@ export default function ProductsDisplay() {
     function loadMore() {
         setVisibleCount((prev) => prev + 20);
     }
+
+    const defaultPrice = { min: 0, max: 2000 };
+    const anyFilterActive = (
+        (sortBy && sortBy.toLowerCase() !== 'newest') ||
+        (selectedBrands && selectedBrands.length > 0) ||
+        (priceRange && (Number(priceRange.min) !== defaultPrice.min || Number(priceRange.max) !== defaultPrice.max)) ||
+        (minRating && Number(minRating) > 0) ||
+        (query && query.length > 0)
+    );
+
+    useEffect(() => {
+        setIsAnyFilter(anyFilterActive);
+    }, [sortBy, selectedBrands, priceRange, minRating, query]);
+
+
+    function handleClearFilters() {
+        setSortBy('Newest'); 
+        setSelectedBrands([]);
+        setPriceRange({ min: 0, max: 2000 });
+        setMinRating(0);
+
+    }
  
     
     return(
         <section className='sm:flex '>
             <div className="border-2 p-4 shadow-gray-400 shadow-md rounded sm:basis-[30%] sm:sticky sm:top-0 sm:self-start sm:overflow-y-auto sm:max-h-[100vh]">
-                <h1 className="font-bold text-lg">Filters</h1>
+                <div className='flex justify-between items-center'>
+                    <h1 className="font-bold text-lg">Filters</h1>
+                    {isAnyFilter && (
+                        <button className="bg-gray-600 text-gray-200 px-3 py-1 rounded text-sm hover:bg-gray-500 cursor-pointer" onClick={() => handleClearFilters()}>Clear Filters</button>
+                    )}
+                </div>
                 <div className="flex flex-col gap-1 m-2">
                     <label className='text-[15px] font-semibold'>Sort By</label>
                     <select value={sortBy}
@@ -145,7 +174,7 @@ export default function ProductsDisplay() {
                     {brands.length > 0 && (
                         brands.map(brand => (
                             <div key={brand} className='flex gap-2 items-center'>
-                                <input type="checkbox" value={brand} onChange={handleBrandChange}/>
+                                <input type="checkbox" value={brand} checked={selectedBrands.includes(brand)} onChange={handleBrandChange}/>
                                 <label htmlFor={brand}>{brand}</label>
                             </div>
                         ))
